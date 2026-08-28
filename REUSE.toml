@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: 2026 kogeler
+# SPDX-License-Identifier: MIT
+
+version = 1
+
+[[annotations]]
+path = [
+    "deprecated/lsposed-vpn/module/src/main/resources/META-INF/xposed/java_init.list",
+    "deprecated/lsposed-vpn/module/src/main/resources/META-INF/xposed/scope.list",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 kogeler"
+SPDX-License-Identifier = "MIT"

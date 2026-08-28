@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: 2026 kogeler
+# SPDX-License-Identifier: MIT
+
+minApiVersion=102
+targetApiVersion=102
+staticScope=false
+exceptionMode=protective
+autoHotReload=false

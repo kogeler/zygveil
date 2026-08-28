@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+SPDX-FileCopyrightText: 2026 kogeler
+SPDX-License-Identifier: MIT
+-->
+<resources>
+    <style name="AppTheme" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">#006C4C</item>
+        <item name="android:navigationBarColor">#F7F9F7</item>
+        <item name="android:statusBarColor">#F7F9F7</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

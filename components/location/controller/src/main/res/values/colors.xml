@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+SPDX-FileCopyrightText: 2026 kogeler
+SPDX-License-Identifier: MIT
+-->
+<resources>
+    <color name="canvas">#F5F7F6</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="ink">#1D2525</color>
+    <color name="muted">#52605D</color>
+    <color name="accent">#006C4C</color>
+    <color name="accent_soft">#D8F3E8</color>
+    <color name="pending">#8A5A00</color>
+    <color name="pending_soft">#FFF2CC</color>
+    <color name="danger">#B3261E</color>
+    <color name="danger_soft">#FFE0DC</color>
+    <color name="divider">#D7DEDB</color>
+</resources>

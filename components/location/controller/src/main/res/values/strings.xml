@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+SPDX-FileCopyrightText: 2026 kogeler
+SPDX-License-Identifier: MIT
+-->
+<resources>
+    <string name="app_name">ZygVeil Location</string>
+    <string name="coordinates">Coordinates</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="altitude_ellipsoid">Ellipsoid altitude</string>
+    <string name="altitude_msl">MSL altitude</string>
+    <string name="apply">Apply</string>
+    <string name="refresh">Refresh status</string>
+    <string name="presets">Presets</string>
+    <string name="preset_name">Preset name</string>
+    <string name="save_preset">Save preset</string>
+    <string name="load_preset">Load %1$s</string>
+    <string name="delete_preset">Delete %1$s</string>
+    <string name="status">Runtime status</string>
+    <string name="status_idle">Not checked</string>
+    <string name="status_loading">Checking</string>
+    <string name="status_applied">Applied</string>
+    <string name="status_pending_upstream">Pending upstream event</string>
+    <string name="status_pending_reboot">Pending reboot</string>
+    <string name="status_recovery_required">Recovery required</string>
+    <string name="status_rejected">Rejected</string>
+    <string name="status_waiting">Waiting for coordinates</string>
+    <string name="status_inactive">Runtime inactive</string>
+    <string name="status_denied">Root access denied</string>
+    <string name="status_missing">Location module unavailable</string>
+    <string name="status_timeout">Helper timed out</string>
+    <string name="status_protocol">Invalid helper response</string>
+    <string name="status_cancelled">Operation cancelled</string>
+    <string name="status_io">Helper unavailable</string>
+    <string name="status_generations">Boot %1$s  Persisted %2$s\nPublished %3$s  Applied %4$s</string>
+    <string name="status_reason">Reason: %1$s</string>
+    <string name="error_required">Required</string>
+    <string name="error_decimal">Enter a decimal number</string>
+    <string name="error_precision_coordinate">Use at most 8 decimal places</string>
+    <string name="error_precision_altitude">Use at most 3 decimal places</string>
+    <string name="error_latitude_range">Range: -90 to 90</string>
+    <string name="error_longitude_range">Range: -180 to 180</string>
+    <string name="error_altitude_range">Range: -12000 to 100000</string>
+    <string name="error_preset_name">Use 1 to 32 plain characters</string>
+    <string name="error_preset_limit">Preset limit reached</string>
+    <string name="error_preset_store">Preset storage unavailable</string>
+    <string name="presets_empty">No presets</string>
+</resources>

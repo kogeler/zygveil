@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+SPDX-FileCopyrightText: 2026 kogeler
+SPDX-License-Identifier: MIT
+-->
+<resources>
+    <string name="app_name">ZygVeil Legacy VPN</string>
+    <string name="app_description">Public VPN-state API virtualization module</string>
+    <string name="framework_waiting">Framework service is not available.</string>
+</resources>

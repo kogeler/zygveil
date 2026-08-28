@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2026 kogeler
+# SPDX-License-Identifier: LGPL-3.0-or-later
+
+{
+  global:
+    zygisk_module_entry;
+    zygisk_companion_entry;
+  local:
+    *;
+};

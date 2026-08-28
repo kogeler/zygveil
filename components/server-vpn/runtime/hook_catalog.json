@@ -1,0 +1,532 @@
+{
+  "schema_version": 1,
+  "class_loader_contract": {
+    "bridge_parent": "connectivity_service_runtime_class_loader",
+    "framework_classes": "BOOTCLASSPATH",
+    "runtime_reachability_gate": "focused_hook_engine_coexistence_poc",
+    "service_acquisition": "local_service_manager_connectivity_binder_instance",
+    "service_classes": "STANDALONE_SYSTEMSERVER_JARS"
+  },
+  "service_boundary": {
+    "binder_interface": "android.net.IConnectivityManager",
+    "callback_authority": "NetworkRequestInfo.mUid captured at registration, never delivery-thread identity",
+    "registration_authority": "Binder caller UID and package are validated before detached request construction",
+    "service_class": "android.net.connectivity.com.android.server.ConnectivityService",
+    "synchronous_authority": "Binder caller UID captured before origin invocation or identity clear",
+    "registration_owner_class": "android.net.connectivity.com.android.server.ConnectivityService$NetworkRequestInfo",
+    "registration_owner_fields": [
+      {
+        "access_flags": 16,
+        "name": "mAsUid",
+        "type": "I"
+      },
+      {
+        "access_flags": 16,
+        "name": "mPid",
+        "type": "I"
+      },
+      {
+        "access_flags": 16,
+        "name": "mUid",
+        "type": "I"
+      },
+      {
+        "access_flags": 16,
+        "name": "mMessenger",
+        "type": "Landroid/os/Messenger;"
+      },
+      {
+        "access_flags": 16,
+        "name": "mPendingIntent",
+        "type": "Landroid/app/PendingIntent;"
+      },
+      {
+        "access_flags": 18,
+        "name": "mNetworkRequestForCallback",
+        "type": "Landroid/net/NetworkRequest;"
+      }
+    ]
+  },
+  "candidate_methods": [
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "getActiveLinkProperties",
+      "signature": "()Landroid/net/LinkProperties;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "getActiveNetwork",
+      "signature": "()Landroid/net/Network;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "getActiveNetworkInfo",
+      "signature": "()Landroid/net/NetworkInfo;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "getAllNetworkInfo",
+      "signature": "()[Landroid/net/NetworkInfo;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "getAllNetworks",
+      "signature": "()[Landroid/net/Network;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "getLinkProperties",
+      "signature": "(Landroid/net/Network;)Landroid/net/LinkProperties;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "getNetworkCapabilities",
+      "signature": "(Landroid/net/Network;Ljava/lang/String;Ljava/lang/String;)Landroid/net/NetworkCapabilities;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "getNetworkInfo",
+      "signature": "(I)Landroid/net/NetworkInfo;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "getNetworkInfoForUid",
+      "signature": "(Landroid/net/Network;IZ)Landroid/net/NetworkInfo;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "getProxyForNetwork",
+      "signature": "(Landroid/net/Network;)Landroid/net/ProxyInfo;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "listenForNetwork",
+      "signature": "(Landroid/net/NetworkCapabilities;Landroid/os/Messenger;Landroid/os/IBinder;ILjava/lang/String;Ljava/lang/String;I)Landroid/net/NetworkRequest;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "pendingListenForNetwork",
+      "signature": "(Landroid/net/NetworkCapabilities;Landroid/app/PendingIntent;Ljava/lang/String;Ljava/lang/String;)V"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "pendingRequestForNetwork",
+      "signature": "(Landroid/net/NetworkCapabilities;Landroid/app/PendingIntent;Ljava/lang/String;Ljava/lang/String;)Landroid/net/NetworkRequest;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "requestNetwork",
+      "signature": "(ILandroid/net/NetworkCapabilities;ILandroid/os/Messenger;ILandroid/os/IBinder;IILjava/lang/String;Ljava/lang/String;I)Landroid/net/NetworkRequest;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "registerConnectivityDiagnosticsCallback",
+      "signature": "(Landroid/net/IConnectivityDiagnosticsCallback;Landroid/net/NetworkRequest;Ljava/lang/String;)V"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "callCallbackForRequest",
+      "signature": "(Landroid/net/connectivity/com/android/server/ConnectivityService$NetworkRequestInfo;ILandroid/os/Bundle;I)V"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "callCallbackForRequest",
+      "signature": "(Landroid/net/connectivity/com/android/server/ConnectivityService$NetworkRequestInfo;Landroid/net/connectivity/com/android/server/connectivity/NetworkAgentInfo;II)V"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "sendPendingIntentForRequest",
+      "signature": "(Landroid/net/connectivity/com/android/server/ConnectivityService$NetworkRequestInfo;Landroid/net/connectivity/com/android/server/connectivity/NetworkAgentInfo;I)V"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "releaseNetworkRequest",
+      "signature": "(Landroid/net/NetworkRequest;)V"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "releasePendingNetworkRequest",
+      "signature": "(Landroid/app/PendingIntent;)V"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "unregisterConnectivityDiagnosticsCallback",
+      "signature": "(Landroid/net/IConnectivityDiagnosticsCallback;)V"
+    }
+  ],
+  "hook_catalog": [
+    {
+      "argument_roles": [
+        "network=observation_handle",
+        "calling_package=service_attribution",
+        "calling_attribution_tag=service_attribution"
+      ],
+      "boundary": "synchronous_projection",
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "copy_strategy": "after_origin_replace_raw_vpn_result_with_exact_backup_donor_copy",
+      "failure_behavior": "return_stock_origin",
+      "id": "sync.network_capabilities",
+      "method": "getNetworkCapabilities",
+      "phase": "after",
+      "return_role": "detached_network_capabilities",
+      "signature": "(Landroid/net/Network;Ljava/lang/String;Ljava/lang/String;)Landroid/net/NetworkCapabilities;",
+      "target_authority": "binder_calling_uid"
+    },
+    {
+      "argument_roles": [
+        "network=observation_handle"
+      ],
+      "boundary": "synchronous_projection",
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "copy_strategy": "after_origin_replace_raw_vpn_result_with_exact_backup_donor_copy",
+      "failure_behavior": "return_stock_origin",
+      "id": "sync.link_properties",
+      "method": "getLinkProperties",
+      "phase": "after",
+      "return_role": "detached_link_properties",
+      "signature": "(Landroid/net/Network;)Landroid/net/LinkProperties;",
+      "target_authority": "binder_calling_uid"
+    },
+    {
+      "argument_roles": [],
+      "boundary": "synchronous_projection",
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "copy_strategy": "after_origin_mask_connected_vpn_value",
+      "failure_behavior": "return_stock_origin",
+      "id": "sync.legacy_active",
+      "method": "getActiveNetworkInfo",
+      "phase": "after",
+      "return_role": "detached_legacy_network_info",
+      "signature": "()Landroid/net/NetworkInfo;",
+      "target_authority": "binder_calling_uid"
+    },
+    {
+      "argument_roles": [
+        "network_type=legacy_selector"
+      ],
+      "boundary": "synchronous_projection",
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "copy_strategy": "after_origin_mask_connected_vpn_value",
+      "failure_behavior": "return_stock_origin",
+      "id": "sync.legacy_type",
+      "method": "getNetworkInfo",
+      "phase": "after",
+      "return_role": "detached_legacy_network_info",
+      "signature": "(I)Landroid/net/NetworkInfo;",
+      "target_authority": "binder_calling_uid"
+    },
+    {
+      "argument_roles": [
+        "network=observation_handle",
+        "uid=query_subject_not_authority",
+        "ignore_blocked=stock_query_flag"
+      ],
+      "boundary": "synchronous_projection",
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "copy_strategy": "after_origin_mask_connected_vpn_value",
+      "failure_behavior": "return_stock_origin",
+      "id": "sync.legacy_network",
+      "method": "getNetworkInfoForUid",
+      "phase": "after",
+      "return_role": "detached_legacy_network_info",
+      "signature": "(Landroid/net/Network;IZ)Landroid/net/NetworkInfo;",
+      "target_authority": "binder_calling_uid"
+    },
+    {
+      "argument_roles": [],
+      "boundary": "synchronous_projection",
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "copy_strategy": "after_origin_copy_array_without_connected_vpn_values",
+      "failure_behavior": "return_stock_origin",
+      "id": "sync.legacy_all",
+      "method": "getAllNetworkInfo",
+      "phase": "after",
+      "return_role": "detached_legacy_network_info_array",
+      "signature": "()[Landroid/net/NetworkInfo;",
+      "target_authority": "binder_calling_uid"
+    },
+    {
+      "argument_roles": [
+        "network=nullable_process_binding_or_explicit_handle"
+      ],
+      "boundary": "synchronous_projection",
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "copy_strategy": "after_origin_replace_vpn_default_or_explicit_proxy_with_exact_backup_donor_copy",
+      "failure_behavior": "return_stock_origin",
+      "id": "sync.default_proxy",
+      "method": "getProxyForNetwork",
+      "phase": "after",
+      "return_role": "detached_proxy_info",
+      "signature": "(Landroid/net/Network;)Landroid/net/ProxyInfo;",
+      "target_authority": "binder_calling_uid"
+    },
+    {
+      "argument_roles": [
+        "capabilities=detached_request_payload",
+        "messenger=callback_identity",
+        "binder=death_and_cleanup_identity",
+        "callback_flags=stock_callback_flags",
+        "calling_package=service_attribution",
+        "calling_attribution_tag=service_attribution",
+        "declared_methods=stock_callback_filter"
+      ],
+      "boundary": "request_ingress",
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "copy_strategy": "before_origin_replace_capabilities_with_detached_not_vpn_copy",
+      "failure_behavior": "invoke_origin_with_stock_arguments",
+      "id": "ingress.listen",
+      "method": "listenForNetwork",
+      "phase": "before",
+      "return_role": "service_owned_network_request",
+      "signature": "(Landroid/net/NetworkCapabilities;Landroid/os/Messenger;Landroid/os/IBinder;ILjava/lang/String;Ljava/lang/String;I)Landroid/net/NetworkRequest;",
+      "target_authority": "binder_calling_uid_and_package"
+    },
+    {
+      "argument_roles": [
+        "capabilities=detached_request_payload",
+        "pending_intent=registration_and_cleanup_identity",
+        "calling_package=service_attribution",
+        "calling_attribution_tag=service_attribution"
+      ],
+      "boundary": "request_ingress",
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "copy_strategy": "before_origin_replace_capabilities_with_detached_not_vpn_copy",
+      "failure_behavior": "invoke_origin_with_stock_arguments",
+      "id": "ingress.pending_listen",
+      "method": "pendingListenForNetwork",
+      "phase": "before",
+      "return_role": "void",
+      "signature": "(Landroid/net/NetworkCapabilities;Landroid/app/PendingIntent;Ljava/lang/String;Ljava/lang/String;)V",
+      "target_authority": "binder_calling_uid_and_package"
+    },
+    {
+      "argument_roles": [
+        "capabilities=detached_request_payload",
+        "pending_intent=registration_and_cleanup_identity",
+        "calling_package=service_attribution",
+        "calling_attribution_tag=service_attribution"
+      ],
+      "boundary": "request_ingress",
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "copy_strategy": "before_origin_replace_capabilities_with_detached_not_vpn_copy",
+      "failure_behavior": "invoke_origin_with_stock_arguments",
+      "id": "ingress.pending_request",
+      "method": "pendingRequestForNetwork",
+      "phase": "before",
+      "return_role": "service_owned_network_request",
+      "signature": "(Landroid/net/NetworkCapabilities;Landroid/app/PendingIntent;Ljava/lang/String;Ljava/lang/String;)Landroid/net/NetworkRequest;",
+      "target_authority": "binder_calling_uid_and_package"
+    },
+    {
+      "argument_roles": [
+        "as_uid=stock_delegation_subject",
+        "capabilities=nullable_detached_request_payload",
+        "request_type=stock_public_overload_selector",
+        "messenger=callback_identity",
+        "timeout_ms=stock_timeout",
+        "binder=death_and_cleanup_identity",
+        "legacy_type=stock_legacy_selector",
+        "callback_flags=stock_callback_flags",
+        "calling_package=service_attribution",
+        "calling_attribution_tag=service_attribution",
+        "declared_methods=stock_callback_filter"
+      ],
+      "boundary": "request_ingress",
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "copy_strategy": "before_origin_replace_non_null_capabilities_with_detached_not_vpn_copy",
+      "failure_behavior": "invoke_origin_with_stock_arguments",
+      "id": "ingress.request",
+      "method": "requestNetwork",
+      "phase": "before",
+      "return_role": "service_owned_network_request",
+      "signature": "(ILandroid/net/NetworkCapabilities;ILandroid/os/Messenger;ILandroid/os/IBinder;IILjava/lang/String;Ljava/lang/String;I)Landroid/net/NetworkRequest;",
+      "target_authority": "binder_calling_uid_and_package"
+    },
+    {
+      "argument_roles": [
+        "callback=binder_registration_and_death_identity",
+        "request=detached_diagnostics_request_payload",
+        "calling_package=service_attribution"
+      ],
+      "boundary": "request_ingress",
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "copy_strategy": "before_origin_replace_request_with_detached_not_vpn_copy",
+      "failure_behavior": "invoke_origin_with_stock_arguments",
+      "id": "ingress.connectivity_diagnostics",
+      "method": "registerConnectivityDiagnosticsCallback",
+      "phase": "before",
+      "return_role": "void",
+      "signature": "(Landroid/net/IConnectivityDiagnosticsCallback;Landroid/net/NetworkRequest;Ljava/lang/String;)V",
+      "target_authority": "binder_calling_uid_and_package"
+    },
+    {
+      "argument_roles": [
+        "registration=authoritative_network_request_info",
+        "network_agent=shared_source_replaced_by_donor_reference_only",
+        "notification_type=stock_callback_type",
+        "arg1=stock_callback_argument"
+      ],
+      "boundary": "callback_egress",
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "copy_strategy": "before_origin_substitute_unique_donor_agent_then_reuse_service_detached_payload_builder",
+      "failure_behavior": "invoke_origin_with_stock_arguments",
+      "id": "egress.callback",
+      "method": "callCallbackForRequest",
+      "phase": "before",
+      "return_role": "void",
+      "signature": "(Landroid/net/connectivity/com/android/server/ConnectivityService$NetworkRequestInfo;Landroid/net/connectivity/com/android/server/connectivity/NetworkAgentInfo;II)V",
+      "target_authority": "network_request_info_uid"
+    },
+    {
+      "argument_roles": [
+        "registration=authoritative_network_request_info",
+        "network_agent=shared_source_replaced_by_donor_reference_only",
+        "notification_type=stock_pending_intent_type"
+      ],
+      "boundary": "pending_intent_egress",
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "copy_strategy": "before_origin_substitute_unique_donor_agent_then_reuse_service_intent_builder",
+      "failure_behavior": "invoke_origin_with_stock_arguments",
+      "id": "egress.pending_intent",
+      "method": "sendPendingIntentForRequest",
+      "phase": "before",
+      "return_role": "void",
+      "signature": "(Landroid/net/connectivity/com/android/server/ConnectivityService$NetworkRequestInfo;Landroid/net/connectivity/com/android/server/connectivity/NetworkAgentInfo;I)V",
+      "target_authority": "network_request_info_uid"
+    }
+  ],
+  "support_methods": [
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "getActiveNetwork",
+      "role": "resolve_nullable_default_proxy_source_for_current_binder_caller",
+      "signature": "()Landroid/net/Network;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "getVpnUnderlyingNetworks",
+      "role": "resolve_declared_underlying_handles_for_authorized_uid",
+      "signature": "(I)[Landroid/net/Network;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "getNetworkAgentInfoForNetwork",
+      "role": "resolve_exact_network_agent_from_handle",
+      "signature": "(Landroid/net/Network;)Landroid/net/connectivity/com/android/server/connectivity/NetworkAgentInfo;"
+    },
+    {
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "method": "networksSortedById",
+      "role": "stable_unique_donor_fallback_candidates",
+      "signature": "()[Landroid/net/connectivity/com/android/server/connectivity/NetworkAgentInfo;"
+    }
+  ],
+  "platform_support_methods": [
+    {
+      "class": "android.net.NetworkCapabilities",
+      "method": "addCapability",
+      "role": "add_not_vpn_to_detached_capabilities",
+      "signature": "(I)Landroid/net/NetworkCapabilities;"
+    }
+  ],
+  "copy_mechanisms": [
+    {
+      "class": "android.net.NetworkCapabilities",
+      "method": "<init>",
+      "role": "detached_network_capabilities_copy",
+      "signature": "(Landroid/net/NetworkCapabilities;)V"
+    },
+    {
+      "class": "android.net.NetworkRequest$Builder",
+      "method": "<init>",
+      "role": "detached_network_request_copy",
+      "signature": "(Landroid/net/NetworkRequest;)V"
+    }
+  ],
+  "support_fields": [
+    {
+      "access_flags": 18,
+      "class": "android.net.connectivity.com.android.server.ConnectivityService",
+      "name": "mContext",
+      "role": "package_manager_authorization_context",
+      "type": "Landroid/content/Context;"
+    },
+    {
+      "access_flags": 65,
+      "class": "android.net.connectivity.com.android.server.connectivity.NetworkAgentInfo",
+      "name": "declaredUnderlyingNetworks",
+      "role": "preferred_donor_handles",
+      "type": "[Landroid/net/Network;"
+    },
+    {
+      "access_flags": 1,
+      "class": "android.net.connectivity.com.android.server.connectivity.NetworkAgentInfo",
+      "name": "networkInfo",
+      "role": "connected_network_state",
+      "type": "Landroid/net/NetworkInfo;"
+    },
+    {
+      "access_flags": 17,
+      "class": "android.net.connectivity.com.android.server.connectivity.NetworkAgentInfo",
+      "name": "network",
+      "role": "immutable_network_handle",
+      "type": "Landroid/net/Network;"
+    },
+    {
+      "access_flags": 1,
+      "class": "android.net.connectivity.com.android.server.connectivity.NetworkAgentInfo",
+      "name": "networkCapabilities",
+      "role": "shared_source_never_mutated_capabilities",
+      "type": "Landroid/net/NetworkCapabilities;"
+    }
+  ],
+  "platform_support_fields": [
+    {
+      "access_flags": 1,
+      "class": "android.content.pm.ApplicationInfo",
+      "name": "privateFlags",
+      "role": "reject_privileged_application",
+      "type": "I"
+    }
+  ],
+  "authorization_constants": {
+    "private_flag_privileged": 8
+  },
+  "excluded_candidates": [
+    {
+      "method": "getActiveLinkProperties",
+      "reason": "hidden_api_not_in_ordinary_sdk_surface",
+      "signature": "()Landroid/net/LinkProperties;"
+    },
+    {
+      "method": "getActiveNetwork",
+      "reason": "network_handle_is_not_projected_and_capability_queries_are_covered",
+      "signature": "()Landroid/net/Network;"
+    },
+    {
+      "method": "getAllNetworks",
+      "reason": "network_handle_enumeration_is_preserved_and_follow_up_queries_are_covered",
+      "signature": "()[Landroid/net/Network;"
+    },
+    {
+      "method": "callCallbackForRequest",
+      "reason": "final_bundle_send_reuses_payload_detached_after_network_agent_egress_hook",
+      "signature": "(Landroid/net/connectivity/com/android/server/ConnectivityService$NetworkRequestInfo;ILandroid/os/Bundle;I)V"
+    },
+    {
+      "method": "releaseNetworkRequest",
+      "reason": "ownership_is_service_owned_network_request_info_not_module_state",
+      "signature": "(Landroid/net/NetworkRequest;)V"
+    },
+    {
+      "method": "releasePendingNetworkRequest",
+      "reason": "ownership_is_service_owned_network_request_info_not_module_state",
+      "signature": "(Landroid/app/PendingIntent;)V"
+    },
+    {
+      "method": "unregisterConnectivityDiagnosticsCallback",
+      "reason": "ownership_is_service_owned_callback_and_network_request_info_not_module_state",
+      "signature": "(Landroid/net/IConnectivityDiagnosticsCallback;)V"
+    }
+  ]
+}

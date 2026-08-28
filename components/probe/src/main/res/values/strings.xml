@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+SPDX-FileCopyrightText: 2026 kogeler
+SPDX-License-Identifier: MIT
+-->
+<resources>
+    <string name="app_name">ZygVeil Probe</string>
+    <string name="probe_idle">Idle</string>
+    <string name="probe_processes_ready">Process load ready</string>
+    <string name="probe_running">Running</string>
+    <string name="location_probe_channel">Location probe sessions</string>
+    <string name="location_probe_running">Location session in progress</string>
+</resources>

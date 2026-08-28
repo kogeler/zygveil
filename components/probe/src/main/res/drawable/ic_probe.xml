@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+SPDX-FileCopyrightText: 2026 kogeler
+SPDX-License-Identifier: MIT
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="#263238"
+        android:pathData="M7,7 H41 V41 H7 Z M10,10 V38 H38 V10 Z" />
+    <path
+        android:fillColor="#00A67D"
+        android:pathData="M14,25 H20 L23,17 L28,32 L31,25 H35 V28 H29 L27,35 L23,23 L22,28 H14 Z" />
+</vector>

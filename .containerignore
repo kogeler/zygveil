@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: 2026 kogeler
+# SPDX-License-Identifier: MIT
+
+*
+!containers/
+!containers/builder/
+!containers/builder/Containerfile
+!containers/builder/entrypoint.sh

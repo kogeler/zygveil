@@ -1,0 +1,14 @@
+# SPDX-FileCopyrightText: 2026 kogeler
+# SPDX-License-Identifier: MIT
+
+.artifacts/
+.state/
+dist/
+.gradle/
+**/build/
+local.properties
+*.jks
+*.keystore
+__pycache__/
+*.pyc
+/tmp

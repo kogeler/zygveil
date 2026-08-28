@@ -1,0 +1,230 @@
+# SPDX-FileCopyrightText: 2026 kogeler
+# SPDX-License-Identifier: MIT
+
+FROM ghcr.io/cirruslabs/android-sdk:36@sha256:f9b3ea9ed2b5fc9522adae82c7b4622ab7aa54207ef532c8e615a347dca08f31
+
+ARG GRADLE_VERSION=9.4.1
+ARG GRADLE_DISTRIBUTION_SHA256=2ab2958f2a1e51120c326cad6f385153bb11ee93b3c216c5fccebfdfbb7ec6cb
+ARG GRADLE_WRAPPER_SHA256=55243ef57851f12b070ad14f7f5bb8302daceeebc5bce5ece5fa6edb23e1145c
+ARG RUFF_VERSION=0.16.4
+ARG RUFF_SHA256=9cb1234804ddb0f7f57cef3f81623ce5acb990e40af7cce08dc7778c9d7ee96c
+ARG MYPY_VERSION=2.3.1
+ARG MYPY_WHEEL_SHA256=6ed5c7e3419083268e5c9258bd1c1ef91af44a9e89374dbcaf37b775716e72eb
+ARG LIBRT_VERSION=0.15.0
+ARG LIBRT_WHEEL_SHA256=89cc46cfd15022e35084355478c9ac809d90b1152222706ac9a7655ec21df6fa
+ARG PATHSPEC_VERSION=1.1.1
+ARG PATHSPEC_WHEEL_SHA256=a00ce642f577bf7f473932318056212bc4f8bfdf53128c78bbd5af0b9b20b189
+ARG MYPY_EXTENSIONS_VERSION=1.1.0
+ARG MYPY_EXTENSIONS_WHEEL_SHA256=1be4cccdb0f2482337c4743e60421de3a356cd97508abadd57d47403e94f5505
+ARG TYPING_EXTENSIONS_VERSION=4.16.0
+ARG TYPING_EXTENSIONS_WHEEL_SHA256=481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8
+ARG SHELLCHECK_VERSION=0.11.0
+ARG SHELLCHECK_SHA256=8c3be12b05d5c177a04c29e3c78ce89ac86f1595681cab149b65b97c4e227198
+ARG SHFMT_VERSION=3.13.1
+ARG SHFMT_SHA256=fb096c5d1ac6beabbdbaa2874d025badb03ee07929f0c9ff67563ce8c75398b1
+ARG HADOLINT_VERSION=2.14.0
+ARG ZYGISK_API_COMMIT=8ce26128f81baaed0b969aaf7f52f886b61af4ab
+ARG ZYGISK_API_SHA256=a5e42dfed30c4055d3a9964f01144f291e7aa40b7a230f4e7abdb0e1a6730993
+ARG LSPLANT_COMMIT=61e10e51eb99dca00dd873f48c28a674dd2b4c4c
+ARG LSPLANT_SHA256=7f1b81d049b03eefde060d12a3d29c84eef2f5298588ec2d3467c989a894ceb8
+ARG DEX_BUILDER_COMMIT=ac7fb2230954ee311808bad469b0db501f31bfb8
+ARG DEX_BUILDER_SHA256=23fdcd5e92acb74b4d0b1b77554c93077ec7255538d852124c9b794d88284efc
+ARG PARALLEL_HASHMAP_COMMIT=0cd57d29a959256ed66b2afdd1009928fc625d09
+ARG PARALLEL_HASHMAP_SHA256=88f37e8c06b034e972b65abcd55ebc753d49374be801006d98faec3f16512684
+ARG SHADOWHOOK_COMMIT=854c775c2c3676e57a0f383597ebf420b5204161
+ARG SHADOWHOOK_SHA256=0e94273d629ac5226c8971a5e73c548f4362c3bbc71eabf10b672a130d8b939e
+
+ENV ANDROID_HOME=/opt/android-sdk \
+    ANDROID_SDK_ROOT=/opt/android-sdk \
+    DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends \
+        python3 xz-utils \
+    && rm -rf /var/lib/apt/lists/* \
+    && ln -s /opt/android-sdk-linux /opt/android-sdk \
+    && java_home="$(dirname "$(dirname "$(readlink -f "$(command -v javac)")")")" \
+    && ln -s "$java_home" /opt/java \
+    && useradd --no-create-home --home-dir /tmp/home --uid 1001 --shell /bin/bash builder
+
+RUN mypy_wheel="$(mktemp --suffix=.whl)" \
+    && librt_wheel="$(mktemp --suffix=.whl)" \
+    && pathspec_wheel="$(mktemp --suffix=.whl)" \
+    && mypy_extensions_wheel="$(mktemp --suffix=.whl)" \
+    && typing_extensions_wheel="$(mktemp --suffix=.whl)" \
+    && curl --fail --location --retry 3 \
+        --output "$mypy_wheel" \
+        "https://files.pythonhosted.org/packages/8e/41/9675c7a1e78edecfba0b79e587a52594c56e189368261dc7b3a7fffb9527/mypy-${MYPY_VERSION}-py3-none-any.whl" \
+    && curl --fail --location --retry 3 \
+        --output "$librt_wheel" \
+        "https://files.pythonhosted.org/packages/a7/b9/bdbb0b648b5c2befb031f4c6f3b1dd857415e8fb492a25a3c764a6681e6c/librt-${LIBRT_VERSION}-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl" \
+    && curl --fail --location --retry 3 \
+        --output "$pathspec_wheel" \
+        "https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-${PATHSPEC_VERSION}-py3-none-any.whl" \
+    && curl --fail --location --retry 3 \
+        --output "$mypy_extensions_wheel" \
+        "https://files.pythonhosted.org/packages/79/7b/2c79738432f5c924bef5071f933bcc9efd0473bac3b4aa584a6f7c1c8df8/mypy_extensions-${MYPY_EXTENSIONS_VERSION}-py3-none-any.whl" \
+    && curl --fail --location --retry 3 \
+        --output "$typing_extensions_wheel" \
+        "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-${TYPING_EXTENSIONS_VERSION}-py3-none-any.whl" \
+    && printf '%s  %s\n' \
+        "$MYPY_WHEEL_SHA256" "$mypy_wheel" \
+        "$LIBRT_WHEEL_SHA256" "$librt_wheel" \
+        "$PATHSPEC_WHEEL_SHA256" "$pathspec_wheel" \
+        "$MYPY_EXTENSIONS_WHEEL_SHA256" "$mypy_extensions_wheel" \
+        "$TYPING_EXTENSIONS_WHEEL_SHA256" "$typing_extensions_wheel" \
+        | sha256sum --check --strict - \
+    && purelib="$(python3 -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')" \
+    && unzip -q "$librt_wheel" -d "$purelib" \
+    && unzip -q "$pathspec_wheel" -d "$purelib" \
+    && unzip -q "$mypy_extensions_wheel" -d "$purelib" \
+    && unzip -q "$typing_extensions_wheel" -d "$purelib" \
+    && unzip -q "$mypy_wheel" -d "$purelib" \
+    && printf '%s\n' '#!/bin/sh' 'exec python3 -m mypy "$@"' >/usr/local/bin/mypy \
+    && chmod 0755 /usr/local/bin/mypy \
+    && test "$(mypy --version | awk '{print $2}')" = "$MYPY_VERSION" \
+    && test "$(python3 -c 'import importlib.metadata; print(importlib.metadata.version("librt"))')" = "$LIBRT_VERSION" \
+    && test "$(python3 -c 'import importlib.metadata; print(importlib.metadata.version("pathspec"))')" = "$PATHSPEC_VERSION" \
+    && test "$(python3 -c 'import importlib.metadata; print(importlib.metadata.version("mypy-extensions"))')" = "$MYPY_EXTENSIONS_VERSION" \
+    && test "$(python3 -c 'import importlib.metadata; print(importlib.metadata.version("typing-extensions"))')" = "$TYPING_EXTENSIONS_VERSION" \
+    && rm -f "$mypy_wheel" "$librt_wheel" "$pathspec_wheel" \
+        "$mypy_extensions_wheel" "$typing_extensions_wheel"
+
+RUN archive="$(mktemp --suffix=.tar.xz)" \
+    && curl --fail --location --retry 3 \
+        --output "$archive" \
+        "https://github.com/koalaman/shellcheck/releases/download/v${SHELLCHECK_VERSION}/shellcheck-v${SHELLCHECK_VERSION}.linux.x86_64.tar.xz" \
+    && printf '%s  %s\n' "$SHELLCHECK_SHA256" "$archive" | sha256sum --check --strict - \
+    && tar --extract --xz --file="$archive" --directory=/tmp \
+    && install -m 0755 \
+        "/tmp/shellcheck-v${SHELLCHECK_VERSION}/shellcheck" /usr/local/bin/shellcheck \
+    && test "$(shellcheck --version | awk '/^version:/ {print $2}')" = "$SHELLCHECK_VERSION" \
+    && rm -rf "$archive" "/tmp/shellcheck-v${SHELLCHECK_VERSION}"
+
+RUN binary="$(mktemp)" \
+    && curl --fail --location --retry 3 \
+        --output "$binary" \
+        "https://github.com/mvdan/sh/releases/download/v${SHFMT_VERSION}/shfmt_v${SHFMT_VERSION}_linux_amd64" \
+    && printf '%s  %s\n' "$SHFMT_SHA256" "$binary" | sha256sum --check --strict - \
+    && install -m 0755 "$binary" /usr/local/bin/shfmt \
+    && test "$(shfmt --version)" = "v${SHFMT_VERSION}" \
+    && rm -f "$binary"
+
+RUN archive="$(mktemp)" \
+    && curl --fail --location --retry 3 \
+        --output "$archive" \
+        "https://releases.astral.sh/github/ruff/releases/download/${RUFF_VERSION}/ruff-x86_64-unknown-linux-gnu.tar.gz" \
+    && printf '%s  %s\n' "$RUFF_SHA256" "$archive" | sha256sum --check --strict - \
+    && tar --extract --gzip --file="$archive" --directory=/tmp \
+    && install -m 0755 \
+        /tmp/ruff-x86_64-unknown-linux-gnu/ruff /usr/local/bin/ruff \
+    && rm -rf "$archive" /tmp/ruff-x86_64-unknown-linux-gnu
+
+RUN temporary="$(mktemp -d)" \
+    && curl --fail --location --retry 3 \
+        --output "$temporary/hadolint-linux-x86_64" \
+        "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-linux-x86_64" \
+    && curl --fail --location --retry 3 \
+        --output "$temporary/hadolint-linux-x86_64.sha256" \
+        "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-linux-x86_64.sha256" \
+    && checksum="$(cut -d ' ' -f 1 "$temporary/hadolint-linux-x86_64.sha256")" \
+    && printf '%s  %s\n' "$checksum" "$temporary/hadolint-linux-x86_64" \
+        | sha256sum --check --strict - \
+    && install -m 0755 "$temporary/hadolint-linux-x86_64" /usr/local/bin/hadolint \
+    && rm -rf "$temporary"
+
+RUN yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" \
+        "platforms;android-37.0" \
+        "build-tools;37.0.0" \
+        "cmake;3.31.6" \
+        "ndk;29.0.14206865" \
+    && test -f "$ANDROID_HOME/platforms/android-36/android.jar" \
+    && test -f "$ANDROID_HOME/platforms/android-37.0/android.jar" \
+    && test -x "$ANDROID_HOME/build-tools/37.0.0/aapt2" \
+    && test -x "$ANDROID_HOME/cmake/3.31.6/bin/cmake" \
+    && test -x "$ANDROID_HOME/cmake/3.31.6/bin/ninja" \
+    && test -x "$ANDROID_HOME/ndk/29.0.14206865/ndk-build" \
+    && test -f "$ANDROID_HOME/ndk/29.0.14206865/NOTICE" \
+    && printf '%s  %s\n' \
+        d9eb9da824d9e247a352f570f01e1169e725b2954bca9e283a71786c59b59f9a \
+        "$ANDROID_HOME/platforms/android-36/android.jar" \
+        bf1b4387cc7ca94fc6ef684f040d9d16fbf16248e181819f020736ea2053f177 \
+        "$ANDROID_HOME/platforms/android-37.0/android.jar" \
+        0f1c0e560f99db510a76ebc99ad5c3e68438f62e8e8617018a716ca4a589a699 \
+        "$ANDROID_HOME/build-tools/37.0.0/aapt2" \
+        | sha256sum --check --strict - \
+    && rm -rf /root/.android /root/.cache
+
+RUN temporary="$(mktemp -d)" \
+    && mkdir -p /opt/vendor-src/zygisk-api /opt/vendor-src/lsplant \
+        /opt/vendor-src/shadowhook \
+    && curl --fail --location --retry 3 \
+        --output "$temporary/zygisk-api.tar.gz" \
+        "https://codeload.github.com/topjohnwu/zygisk-module-sample/tar.gz/${ZYGISK_API_COMMIT}" \
+    && curl --fail --location --retry 3 \
+        --output "$temporary/lsplant.tar.gz" \
+        "https://codeload.github.com/LSPosed/LSPlant/tar.gz/${LSPLANT_COMMIT}" \
+    && curl --fail --location --retry 3 \
+        --output "$temporary/dex-builder.tar.gz" \
+        "https://codeload.github.com/LSPosed/DexBuilder/tar.gz/${DEX_BUILDER_COMMIT}" \
+    && curl --fail --location --retry 3 \
+        --output "$temporary/parallel-hashmap.tar.gz" \
+        "https://codeload.github.com/greg7mdp/parallel-hashmap/tar.gz/${PARALLEL_HASHMAP_COMMIT}" \
+    && curl --fail --location --retry 3 \
+        --output "$temporary/shadowhook.tar.gz" \
+        "https://codeload.github.com/bytedance/android-inline-hook/tar.gz/${SHADOWHOOK_COMMIT}" \
+    && printf '%s  %s\n' \
+        "$ZYGISK_API_SHA256" "$temporary/zygisk-api.tar.gz" \
+        "$LSPLANT_SHA256" "$temporary/lsplant.tar.gz" \
+        "$DEX_BUILDER_SHA256" "$temporary/dex-builder.tar.gz" \
+        "$PARALLEL_HASHMAP_SHA256" "$temporary/parallel-hashmap.tar.gz" \
+        "$SHADOWHOOK_SHA256" "$temporary/shadowhook.tar.gz" \
+        | sha256sum --check --strict - \
+    && tar --extract --gzip --strip-components=1 \
+        --file="$temporary/zygisk-api.tar.gz" --directory=/opt/vendor-src/zygisk-api \
+    && tar --extract --gzip --strip-components=1 \
+        --file="$temporary/lsplant.tar.gz" --directory=/opt/vendor-src/lsplant \
+    && mkdir -p /opt/vendor-src/lsplant/lsplant/src/main/jni/external/dex_builder \
+    && tar --extract --gzip --strip-components=1 \
+        --file="$temporary/dex-builder.tar.gz" \
+        --directory=/opt/vendor-src/lsplant/lsplant/src/main/jni/external/dex_builder \
+    && mkdir -p \
+        /opt/vendor-src/lsplant/lsplant/src/main/jni/external/dex_builder/external/parallel_hashmap \
+    && tar --extract --gzip --strip-components=1 \
+        --file="$temporary/parallel-hashmap.tar.gz" \
+        --directory=/opt/vendor-src/lsplant/lsplant/src/main/jni/external/dex_builder/external/parallel_hashmap \
+    && tar --extract --gzip --strip-components=1 \
+        --file="$temporary/shadowhook.tar.gz" --directory=/opt/vendor-src/shadowhook \
+    && test -f /opt/vendor-src/zygisk-api/module/jni/zygisk.hpp \
+    && test -f /opt/vendor-src/lsplant/lsplant/src/main/jni/include/lsplant.hpp \
+    && test -f /opt/vendor-src/lsplant/lsplant/src/main/jni/external/dex_builder/CMakeLists.txt \
+    && test -f /opt/vendor-src/lsplant/lsplant/src/main/jni/external/dex_builder/external/parallel_hashmap/CMakeLists.txt \
+    && test -f /opt/vendor-src/shadowhook/shadowhook/src/main/cpp/include/shadowhook.h \
+    && rm -rf "$temporary"
+
+RUN archive="$(mktemp)" \
+    && curl --fail --location --retry 3 \
+        --output "$archive" \
+        "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" \
+    && printf '%s  %s\n' "$GRADLE_DISTRIBUTION_SHA256" "$archive" \
+        | sha256sum --check --strict - \
+    && unzip -q "$archive" -d /tmp \
+    && mkdir -p /tmp/wrapper-project /opt/gradle-wrapper \
+    && touch /tmp/wrapper-project/settings.gradle \
+    && "/tmp/gradle-${GRADLE_VERSION}/bin/gradle" --no-daemon \
+        --project-dir /tmp/wrapper-project wrapper \
+        --gradle-version "$GRADLE_VERSION" --distribution-type bin \
+    && cp /tmp/wrapper-project/gradle/wrapper/gradle-wrapper.jar \
+        /opt/gradle-wrapper/gradle-wrapper.jar \
+    && printf '%s  %s\n' "$GRADLE_WRAPPER_SHA256" /opt/gradle-wrapper/gradle-wrapper.jar \
+        | sha256sum --check --strict - \
+    && chmod 0444 /opt/gradle-wrapper/gradle-wrapper.jar \
+    && rm -rf "$archive" "/tmp/gradle-${GRADLE_VERSION}" /tmp/wrapper-project
+
+COPY containers/builder/entrypoint.sh /usr/local/sbin/android-builder-entrypoint
+RUN chmod 0755 /usr/local/sbin/android-builder-entrypoint
+
+ENV JAVA_HOME=/opt/java
+USER builder
+WORKDIR /work
+ENTRYPOINT ["/usr/local/sbin/android-builder-entrypoint"]

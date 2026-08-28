@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: 2026 kogeler
+# SPDX-License-Identifier: MIT
+
+target-version = "py312"
+line-length = 100
+exclude = [".artifacts", ".state", "dist"]
+
+[lint]
+select = ["B", "E", "F", "I", "PERF", "RUF", "SIM", "UP"]
+
+[format]
+docstring-code-format = true
